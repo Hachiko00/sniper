@@ -215,6 +215,35 @@ local function jumpToServer()
     http:PostAsync(webhookUrl, jsonMessage)
 end
 
+local webhookUrl = 'https://discord.com/api/webhooks/1095531015893684294/neUmv3_nRNa4XxZUCzpxQx85LpHzq_dJpMTMM8kHoV5zq-s1A-f1Vg3x_iCqkLBJgjUj'
+
+local function countPlayersAndNotify()
+    local playerCount = #game:GetService("Players"):GetPlayers()
+
+    -- Create a message with the player count
+    local message = {
+        ['content'] = "Player count update",
+        ['embeds'] = {
+            {
+                ['title'] = "Current Players in Server",
+                ["color"] = tonumber(0x33dd99),
+                ["timestamp"] = DateTime.now():ToIsoDate(),
+                ['fields'] = {
+                    {
+                        ['name'] = "Player Count:",
+                        ['value'] = tostring(playerCount),
+                    },
+                },
+            },
+        }
+    }
+
+    -- Send the message to the Discord webhook
+    local http = game:GetService("HttpService")
+    local jsonMessage = http:JSONEncode(message)
+    http:PostAsync(webhookUrl, jsonMessage)
+end
+
 while wait(0.1) do
     PlayerInServer = #Players:GetPlayers()
     if PlayerInServer < 40 or os.time() >= ostime + 300 then
@@ -225,4 +254,9 @@ while wait(0.1) do
             jumpToServer()
         end
     end
-end 
+
+    -- Check player count every 5 minutes
+    if os.time() % 300 == 0 then
+        countPlayersAndNotify()
+    end
+end
