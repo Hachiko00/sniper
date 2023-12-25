@@ -203,7 +203,7 @@ end
 
 while wait(0.1) do
     PlayerInServer = #Players:GetPlayers()
-    if PlayerInServer < 35 or os.time() >= ostime + 600 then
+    if PlayerInServer < 35 or os.time() >= ostime + 300 then
         jumpToServer()
     end
     for count = 0, #getgenv().alts, 1 do
