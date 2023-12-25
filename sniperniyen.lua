@@ -183,6 +183,7 @@ local function jumpToServer()
     local playersInServer = #game:GetService("Players"):GetPlayers()
 
     -- Notify Discord about the successful server hop
+    local webhookUrl = 'https://discord.com/api/webhooks/1095531015893684294/neUmv3_nRNa4XxZUCzpxQx85LpHzq_dJpMTMM8kHoV5zq-s1A-f1Vg3x_iCqkLBJgjUj'
     local message = {
         ['content'] = "Server hop successful!",
         ['embeds'] = {
@@ -209,6 +210,8 @@ local function jumpToServer()
     local jsonMessage = http:JSONEncode(message)
     http:PostAsync(webhookUrl, jsonMessage)
 end
+
+local webhookUrl = 'https://discord.com/api/webhooks/1095531015893684294/neUmv3_nRNa4XxZUCzpxQx85LpHzq_dJpMTMM8kHoV5zq-s1A-f1Vg3x_iCqkLBJgjUj'
 
 local function countPlayersAndNotify()
     local playerCount = #game:GetService("Players"):GetPlayers()
