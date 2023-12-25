@@ -235,6 +235,6 @@ while true do
         end
     end
 
-    wait(0.1) -- Adjust this wait time as needed
+    wait(0.5) -- Adjust this wait time as needed
 end
 
