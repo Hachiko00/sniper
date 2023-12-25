@@ -211,46 +211,6 @@ local function jumpToServer()
     http:PostAsync(webhookUrl, jsonMessage)
 end
 
-local webhookUrl = 'https://discord.com/api/webhooks/1095531015893684294/neUmv3_nRNa4XxZUCzpxQx85LpHzq_dJpMTMM8kHoV5zq-s1A-f1Vg3x_iCqkLBJgjUj'
-
-local function countPlayersAndNotify()
-    print("Checking player count and notifying...")
-    local playerCount = #game:GetService("Players"):GetPlayers()
-
-    local message = {
-        ['content'] = "Player count update",
-        ['embeds'] = {
-            {
-                ['title'] = "Current Players in Server",
-                ["color"] = tonumber(0x33dd99),
-                ["timestamp"] = DateTime.now():ToIsoDate(),
-                ['fields'] = {
-                    {
-                        ['name'] = "Player Count:",
-                        ['value'] = tostring(playerCount),
-                    },
-                },
-            },
-        }
-    }
-
-    local http = game:GetService("HttpService")
-    local jsonMessage = http:JSONEncode(message)
-
-    print("Sending HTTP POST request...")
-    
-    local success, response = pcall(function()
-        return http:PostAsync(webhookUrl, jsonMessage)
-    end)
-
-    if success then
-        print("HTTP Response Status Code:", response and response.StatusCode)
-        print("HTTP Response Body:", response and response.Body)
-    else
-        print("Error during HTTP request:", response)
-    end
-end
-
 while wait(0.1) do
     PlayerInServer = #Players:GetPlayers()
     if PlayerInServer < 40 or os.time() >= ostime + 300 then
@@ -260,10 +220,5 @@ while wait(0.1) do
         if game.Players:FindFirstChild(alts[count]) and alts[count] ~= game:GetService("Players").LocalPlayer then
             jumpToServer()
         end
-    end
-
-    -- Check player count every 5 minutes
-    if os.time() % 60 == 0 then
-        countPlayersAndNotify()
     end
 end
