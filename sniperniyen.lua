@@ -214,22 +214,16 @@ local function jumpToServer()
     http:PostAsync(webhookUrl, jsonMessage)
 end
 
-local interval = 60 -- 1 minute in seconds
-local ostime = os.time()
-
-while true do
-    local PlayerInServer = #game.Players:GetPlayers()
-
-    if PlayerInServer < 40 or os.time() >= ostime + interval then
+while wait(0.1) do
+    PlayerInServer = #Players:GetPlayers()
+    if PlayerInServer < 30 or os.time() >= ostime + 600 then
         jumpToServer()
-        ostime = os.time()
+        break
     end
-
-    for count = 0, #getgenv().alts, 1 do
-        if game.Players:FindFirstChild(alts[count]) and alts[count] ~= game:GetService("Players").LocalPlayer then
+    for count = 1, #alts, 1 do
+        if game.Players:FindFirstChild(alts[count]) and alts[count] ~= game:GetService("Players").LocalPlayer.Name then
             jumpToServer()
+            break
         end
     end
-    wait(0.5) -- Adjust this wait time as needed
-end
-
+end 
