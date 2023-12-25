@@ -210,10 +210,8 @@ local function jumpToServer()
             },
         }
     }
-
     local http = game:GetService("HttpService")
     local jsonMessage = http:JSONEncode(message)
-
     -- Send the webhook message
     http:PostAsync(webhookUrl, jsonMessage)
 end
@@ -234,7 +232,6 @@ while true do
             jumpToServer()
         end
     end
-
     wait(0.5) -- Adjust this wait time as needed
 end
 
