@@ -236,12 +236,19 @@ local function countPlayersAndNotify()
 
     local http = game:GetService("HttpService")
     local jsonMessage = http:JSONEncode(message)
-    
+
     print("Sending HTTP POST request...")
-    local response = http:PostAsync(webhookUrl, jsonMessage)
     
-    -- Print the response for debugging
-    print("HTTP Response:", response)
+    local success, response = pcall(function()
+        return http:PostAsync(webhookUrl, jsonMessage)
+    end)
+
+    if success then
+        print("HTTP Response Status Code:", response and response.StatusCode)
+        print("HTTP Response Body:", response and response.Body)
+    else
+        print("Error during HTTP request:", response)
+    end
 end
 
 while wait(0.1) do
