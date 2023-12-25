@@ -149,31 +149,37 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 end)
 print('executed')
 
-local function jumpToServer() 
-    local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true" 
-    local req = request({ Url = string.format(sfUrl, 15502339080, "Desc", 100) }) 
-    local body = game:GetService("HttpService"):JSONDecode(req.Body) 
+local function jumpToServer()
+    local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true"
+    local req = request({ Url = string.format(sfUrl, 15502339080, "Desc", 100) })
+    local body = game:GetService("HttpService"):JSONDecode(req.Body)
     local deep = math.random(1, 3)
-    if deep > 1 then 
-        for i = 1, deep, 1 do 
-            req = request({ Url = string.format(sfUrl .. "&cursor=" .. body.nextPageCursor, 15502339080, "Desc", 100) }) 
-            body = game:GetService("HttpService"):JSONDecode(req.Body) 
+
+    if deep > 1 then
+        for i = 1, deep, 1 do
+            req = request({ Url = string.format(sfUrl .. "&cursor=" .. body.nextPageCursor, 15502339080, "Desc", 100) })
+            body = game:GetService("HttpService"):JSONDecode(req.Body)
             task.wait(0.1)
-        end 
-    end 
-    local servers = {} 
-    if body and body.data then 
-        for i, v in next, body.data do 
+        end
+    end
+
+    local servers = {}
+
+    if body and body.data then
+        for i, v in next, body.data do
             if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing < v.maxPlayers and v.id ~= game.JobId then
                 table.insert(servers, 1, v.id)
             end
         end
     end
+
     local randomCount = #servers
+
     if not randomCount then
         randomCount = 2
     end
-    game:GetService("TeleportService"):TeleportToPlaceInstance(15502339080, servers[math.random(1, randomCount)], game:GetService("Players").LocalPlayer) 
+
+    game:GetService("TeleportService"):TeleportToPlaceInstance(15502339080, servers[math.random(1, randomCount)], game:GetService("Players").LocalPlayer)
 
     local serverId = servers[math.random(1, randomCount)]
 
@@ -182,7 +188,7 @@ local function jumpToServer()
     local playersInServer = #game:GetService("Players"):GetPlayers()
 
     -- Notify Discord about the successful server hop
-    local webhookUrl = 'https://discord.com/api/webhooks/1095531015893684294/neUmv3_nRNa4XxZUCzpxQx85LpHzq_dJpMTMM8kHoV5zq-s1A-f1Vg3x_iCqkLBJgjUj'
+    local webhookUrl = 'https://discord.com/api/webhooks/1188859203599740968/BAVSkgB514qdb9hdpEE5OazqkE3FNfmJXja3JvUNTaz7__XlK4x4h0YyaCRgDg-konPg' -- Replace with your Discord webhook URL
     local message = {
         ['content'] = "Server hop successful!",
         ['embeds'] = {
@@ -207,17 +213,28 @@ local function jumpToServer()
 
     local http = game:GetService("HttpService")
     local jsonMessage = http:JSONEncode(message)
+
+    -- Send the webhook message
     http:PostAsync(webhookUrl, jsonMessage)
 end
 
-while wait(0.5) do
-    PlayerInServer = #Players:GetPlayers()
-    if PlayerInServer < 40 or os.time() >= ostime + 300 then
+local interval = 60 -- 1 minute in seconds
+local ostime = os.time()
+
+while true do
+    local PlayerInServer = #Players:GetPlayers()
+
+    if PlayerInServer < 40 or os.time() >= ostime + interval then
         jumpToServer()
+        ostime = os.time() -- Update the timer
     end
+
     for count = 0, #getgenv().alts, 1 do
         if game.Players:FindFirstChild(alts[count]) and alts[count] ~= game:GetService("Players").LocalPlayer then
             jumpToServer()
         end
     end
+
+    wait(0.1) -- Adjust this wait time as needed
 end
+
