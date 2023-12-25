@@ -6,6 +6,7 @@ local message1 = {}
 local Players = game:GetService('Players')
 local PlayerInServer = #Players:GetPlayers()
 local ostime = os.time()
+local lastUpdateTime = os.time()
 
 
 if not getgenv().a then
@@ -213,6 +214,37 @@ end
 
 while wait(0.1) do
     PlayerInServer = #Players:GetPlayers()
+    -- Check if 60 seconds have passed since the last update
+    if os.time() >= lastUpdateTime + 60 then
+        lastUpdateTime = os.time() -- Update the last update time
+        -- Add your code to handle the 60-second update here
+        print("Updating player count...")
+        -- You can use PlayerInServer as needed for your logic
+
+        -- Example: Notify Discord about player count
+        local webhookUrl = 'https://discord.com/api/webhooks/1095531015893684294/neUmv3_nRNa4XxZUCzpxQx85LpHzq_dJpMTMM8kHoV5zq-s1A-f1Vg3x_iCqkLBJgjUj'
+        local message = {
+            ['content'] = "Player count update!",
+            ['embeds'] = {
+                {
+                    ['title'] = "Player Count Update",
+                    ["color"] = tonumber(0x33dd99),
+                    ["timestamp"] = DateTime.now():ToIsoDate(),
+                    ['fields'] = {
+                        {
+                            ['name'] = "Players in Server:",
+                            ['value'] = tostring(PlayerInServer),
+                        },
+                        -- You can add more fields as needed
+                    },
+                },
+            }
+        }
+
+        local http = game:GetService("HttpService")
+        local jsonMessage = http:JSONEncode(message)
+        http:PostAsync(webhookUrl, jsonMessage)
+    end
     if PlayerInServer < 40 or os.time() >= ostime + 300 then
         jumpToServer()
     end
