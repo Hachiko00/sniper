@@ -4,7 +4,7 @@ game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local message1 = {}
 local Players = game:GetService('Players')
-local PlayerInServer = #Players:GetPlayers()
+local PlayerInServer = #game.Players:GetPlayers()
 local ostime = os.time()
 
 if not getgenv().a then
@@ -211,7 +211,7 @@ local function jumpToServer()
 end
 
 while wait(0.1) do
-    PlayerInServer = #Players:GetPlayers()
+    PlayerInServer = #game.Players:GetPlayers()
     if PlayerInServer < 40 or os.time() >= ostime + 300 then
         jumpToServer()
     end
