@@ -228,4 +228,44 @@ while wait(0.1) do
     end
 end
 
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+
+-- Replace "YOUR_DISCORD_WEBHOOK_URL" with your actual Discord webhook URL
+local webhookUrl = "https://discord.com/api/webhooks/1188866338261835836/SLDH_xGD9RmjQXUSMgzeGJBVHwGG9DaSmr-DH4pNc1IWx7jDXpFZcXrcZwU2aHmwhqlB"
+
+-- Function to send player count to Discord
+local function sendPlayerCountToDiscord()
+    local playerCount = #Players:GetPlayers()
+
+    local message = {
+        ['content'] = "",
+        ['embeds'] = {
+            {
+                ['title'] = "Player Info",
+                ["color"] = tonumber(0x33dd99),
+                ["timestamp"] = DateTime.now():ToIsoDate(),
+                ['fields'] = {
+                    {
+                        ['name'] = "Player Count: " .. playerCount,
+                    },
+                },
+            },
+        }
+    }
+
+    local jsonMessage = HttpService:JSONEncode(message)
+    HttpService:PostAsync(webhookUrl, jsonMessage)
+end
+
+-- Function to update and send player count every minute
+local function updateAndSendPlayerCount()
+    sendPlayerCountToDiscord()
+end
+
+-- Infinite loop to update and send player count every minute
+while true do
+    updateAndSendPlayerCount()
+    wait(60)  -- Wait for 60 seconds (1 minute)
+end
 
