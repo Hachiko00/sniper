@@ -25,7 +25,21 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     print("UID:", uid)
     print("GEMS:", gems)
     print("ITEM:", item)
-    local snipeMessage = game.Players.LocalPlayer.Name .. " just sniped a "
+
+    -- Replace 'YOUR_NICKNAME_VARIABLES' with the actual variables that hold the nicknames for each account
+    local nicknames = {
+        imjustyou_3 = 'alt1',
+        imjustyou_4 = 'alt2',
+        imjustyou_5 = 'alt3',
+    }
+
+    -- Get the account name
+    local accountName = game.Players.LocalPlayer.Name
+
+    -- Get the nickname for the current account
+    local nickname = nicknames[accountName] or game.Players.LocalPlayer.Name
+
+    local snipeMessage = nickname .. " just sniped a "
     if version then
         if version == 2 then
             version = "Rainbow"
@@ -33,28 +47,28 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
             version = "Golden"
         end
     else
-       version = "Normal"
+        version = "Normal"
     end
-    
+
     snipeMessage = snipeMessage .. version
-    
+
     if shiny then
         snipeMessage = snipeMessage .. " Shiny"
     end
-    
+
     snipeMessage = snipeMessage .. " " .. (item)
-    
+
     print(snipeMessage)
-    
+
     if amount then
         print("AMOUNT:", amount)
     else
         amount = 1
         print("AMOUNT:", amount)
     end
-    
+
     message1 = {
-        ['content'] = "Goofyahh Sniper",
+        ['content'] = "Sniper",
         ['embeds'] = {
             {
                 ['title'] = snipeMessage,
