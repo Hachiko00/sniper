@@ -214,6 +214,7 @@ end
 local webhookUrl = 'https://discord.com/api/webhooks/1095531015893684294/neUmv3_nRNa4XxZUCzpxQx85LpHzq_dJpMTMM8kHoV5zq-s1A-f1Vg3x_iCqkLBJgjUj'
 
 local function countPlayersAndNotify()
+    print("Checking player count and notifying...")
     local playerCount = #game:GetService("Players"):GetPlayers()
 
     local message = {
@@ -235,7 +236,12 @@ local function countPlayersAndNotify()
 
     local http = game:GetService("HttpService")
     local jsonMessage = http:JSONEncode(message)
-    http:PostAsync(webhookUrl, jsonMessage)
+    
+    print("Sending HTTP POST request...")
+    local response = http:PostAsync(webhookUrl, jsonMessage)
+    
+    -- Print the response for debugging
+    print("HTTP Response:", response)
 end
 
 while wait(0.1) do
