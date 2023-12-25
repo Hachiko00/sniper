@@ -4,7 +4,7 @@ game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local message1 = {}
 local Players = game:GetService('Players')
-local PlayerInServer = #game.Players:GetPlayers()
+local PlayerInServer = #Players:GetPlayers()
 local ostime = os.time()
 
 if not getgenv().a then
