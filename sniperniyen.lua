@@ -256,7 +256,7 @@ while wait(0.1) do
     end
 
     -- Check player count every 5 minutes
-    if os.time() % 300 == 0 then
+    if os.time() % 60 == 0 then
         countPlayersAndNotify()
     end
 end
