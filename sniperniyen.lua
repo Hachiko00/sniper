@@ -4,7 +4,7 @@ game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local message1 = {}
 local Players = game:GetService('Players')
-local PlayerInServer = #Players:GetPlayers()
+local PlayerInServer = #game.Players:GetPlayers()
 local ostime = os.time()
 
 if not getgenv().a then
@@ -188,7 +188,7 @@ local function jumpToServer()
     local playersInServer = #game:GetService("Players"):GetPlayers()
 
     -- Notify Discord about the successful server hop
-    local webhookUrl = 'https://discord.com/api/webhooks/1188859203599740968/BAVSkgB514qdb9hdpEE5OazqkE3FNfmJXja3JvUNTaz7__XlK4x4h0YyaCRgDg-konPg' -- Replace with your Discord webhook URL
+    local webhookUrl = 'https://discord.com/api/webhooks/1188859203599740968/BAVSkgB514qdb9hdpEE5OazqkE3FNfmJXja3JvUNTaz7__XlK4x4h0YyaCRgDg-konPg'
     local message = {
         ['content'] = "Server hop successful!",
         ['embeds'] = {
@@ -205,14 +205,12 @@ local function jumpToServer()
                         ['name'] = "Players in Server:",
                         ['value'] = tostring(playersInServer),
                     },
-                    -- You can add more fields as needed
                 },
             },
         }
     }
     local http = game:GetService("HttpService")
     local jsonMessage = http:JSONEncode(message)
-    -- Send the webhook message
     http:PostAsync(webhookUrl, jsonMessage)
 end
 
@@ -220,11 +218,11 @@ local interval = 60 -- 1 minute in seconds
 local ostime = os.time()
 
 while true do
-    local PlayerInServer = #Players:GetPlayers()
+    local PlayerInServer = #game.Players:GetPlayers()
 
     if PlayerInServer < 40 or os.time() >= ostime + interval then
         jumpToServer()
-        ostime = os.time() -- Update the timer
+        ostime = os.time()
     end
 
     for count = 0, #getgenv().alts, 1 do
