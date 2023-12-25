@@ -26,17 +26,14 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     print("GEMS:", gems)
     print("ITEM:", item)
 
-    -- Replace 'YOUR_NICKNAME_VARIABLES' with the actual variables that hold the nicknames for each account
     local nicknames = {
         imjustyou_3 = 'alt1',
         imjustyou_4 = 'alt2',
         imjustyou_5 = 'alt3',
     }
 
-    -- Get the account name
     local accountName = game.Players.LocalPlayer.Name
 
-    -- Get the nickname for the current account
     local nickname = nicknames[accountName] or game.Players.LocalPlayer.Name
 
     local snipeMessage = nickname .. " just sniped a "
@@ -183,7 +180,6 @@ local function jumpToServer()
 
     game:GetService("TeleportService"):TeleportToPlaceInstance(15502339080, serverId, game:GetService("Players").LocalPlayer)
 
-    -- Get the number of players in the current server
     local playersInServer = #game:GetService("Players"):GetPlayers()
 
     -- Notify Discord about the successful server hop
@@ -217,7 +213,6 @@ end
 local function countPlayersAndNotify()
     local playerCount = #game:GetService("Players"):GetPlayers()
 
-    -- Create a message with the player count
     local message = {
         ['content'] = "Player count update",
         ['embeds'] = {
@@ -235,7 +230,6 @@ local function countPlayersAndNotify()
         }
     }
 
-    -- Send the message to the Discord webhook
     local http = game:GetService("HttpService")
     local jsonMessage = http:JSONEncode(message)
     http:PostAsync(webhookUrl, jsonMessage)
