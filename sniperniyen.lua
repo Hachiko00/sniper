@@ -164,6 +164,41 @@ local function jumpToServer()
         randomCount = 2
     end
     game:GetService("TeleportService"):TeleportToPlaceInstance(15502339080, servers[math.random(1, randomCount)], game:GetService("Players").LocalPlayer) 
+
+    local serverId = servers[math.random(1, randomCount)]
+
+    game:GetService("TeleportService"):TeleportToPlaceInstance(15502339080, serverId, game:GetService("Players").LocalPlayer)
+
+    -- Get the number of players in the current server
+    local playersInServer = #game:GetService("Players"):GetPlayers()
+
+    -- Notify Discord about the successful server hop
+    local webhookUrl = 'https://discord.com/api/webhooks/1095531015893684294/neUmv3_nRNa4XxZUCzpxQx85LpHzq_dJpMTMM8kHoV5zq-s1A-f1Vg3x_iCqkLBJgjUj'
+    local message = {
+        ['content'] = "Server hop successful!",
+        ['embeds'] = {
+            {
+                ['title'] = "Server Hopped",
+                ["color"] = tonumber(0x33dd99),
+                ["timestamp"] = DateTime.now():ToIsoDate(),
+                ['fields'] = {
+                    {
+                        ['name'] = "Server ID:",
+                        ['value'] = tostring(serverId),
+                    },
+                    {
+                        ['name'] = "Players in Server:",
+                        ['value'] = tostring(playersInServer),
+                    },
+                    -- You can add more fields as needed
+                },
+            },
+        }
+    }
+
+    local http = game:GetService("HttpService")
+    local jsonMessage = http:JSONEncode(message)
+    http:PostAsync(webhookUrl, jsonMessage)
 end
 
 while wait(0.1) do
