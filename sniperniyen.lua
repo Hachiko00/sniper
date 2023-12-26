@@ -29,6 +29,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
         imjustyou_3 = 'alt1',
         imjustyou_4 = 'alt2',
         imjustyou_5 = 'alt3',
+        imjustyou_6 = 'alt4',
     }
 
     local accountName = game.Players.LocalPlayer.Name
@@ -194,6 +195,7 @@ local function jumpToServer()
         imjustyou_3 = 'alt1',
         imjustyou_4 = 'alt2',
         imjustyou_5 = 'alt3',
+        imjustyou_6 = 'alt4',
     }
 
     local accountName = game.Players.LocalPlayer.Name
