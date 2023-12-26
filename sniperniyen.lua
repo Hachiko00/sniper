@@ -193,7 +193,7 @@ local function jumpToServer()
         ['content'] = "Server hop successful!",
         ['embeds'] = {
             {
-                ['title'] = "Server Hopped",
+                ['title'] = "Server Hopped" .. " | " .. nickname,
                 ["color"] = tonumber(0x33dd99),
                 ["timestamp"] = DateTime.now():ToIsoDate(),
                 ['fields'] = {
