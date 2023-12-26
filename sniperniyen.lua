@@ -189,6 +189,16 @@ local function jumpToServer()
 
     -- Notify Discord about the successful server hop
     local webhookUrl = 'https://discord.com/api/webhooks/1188859203599740968/BAVSkgB514qdb9hdpEE5OazqkE3FNfmJXja3JvUNTaz7__XlK4x4h0YyaCRgDg-konPg'
+
+    local nicknames = {
+        imjustyou_3 = 'alt1',
+        imjustyou_4 = 'alt2',
+        imjustyou_5 = 'alt3',
+    }
+
+    local accountName = game.Players.LocalPlayer.Name
+    local nickname = nicknames[accountName] or game.Players.LocalPlayer.Name
+    
     local message = {
         ['content'] = "Server hop successful!" .. " | " .. nickname,
         ['embeds'] = {
