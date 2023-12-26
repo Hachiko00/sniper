@@ -211,10 +211,6 @@ local function jumpToServer()
                         ['name'] = "Server ID:",
                         ['value'] = tostring(serverId),
                     },
-                    {
-                        ['name'] = "Players in Server:",
-                        ['value'] = tostring(playersInServer),
-                    },
                 },
             },
         }
