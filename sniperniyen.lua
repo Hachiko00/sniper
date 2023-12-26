@@ -150,6 +150,33 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 end)
 print('executed')
 
+local function create_platform(x, y, z)
+    local p = Instance.new("Part")
+    p.Anchored = true
+    p.Name = "plat"
+    p.Position = Vector3.new(x, y, z)
+    p.Size = Vector3.new(10, 1, 10)
+    p.Parent = game.Workspace
+end
+
+local function teleport(x, y, z)
+    local Players = game:GetService("Players")
+    local LocalPlayer = Players.LocalPlayer
+
+    -- Wait for the character to be available
+    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+
+    if humanoidRootPart then
+        humanoidRootPart.CFrame = CFrame.new(Vector3.new(x, y, z))
+    end
+end
+
+create_platform(-922, 190, -2338)
+wait(10)
+teleport(-922, 200, -2338)
+
 local function jumpToServer()
     local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true"
     local req = request({ Url = string.format(sfUrl, 15502339080, "Desc", 100) })
