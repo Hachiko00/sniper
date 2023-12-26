@@ -190,10 +190,10 @@ local function jumpToServer()
     -- Notify Discord about the successful server hop
     local webhookUrl = 'https://discord.com/api/webhooks/1188859203599740968/BAVSkgB514qdb9hdpEE5OazqkE3FNfmJXja3JvUNTaz7__XlK4x4h0YyaCRgDg-konPg'
     local message = {
-        ['content'] = "Server hop successful!",
+        ['content'] = "Server hop successful!" .. " | " .. nickname,
         ['embeds'] = {
             {
-                ['title'] = "Server Hopped" .. " | " .. nickname,
+                ['title'] = "Server Hopped",
                 ["color"] = tonumber(0x33dd99),
                 ["timestamp"] = DateTime.now():ToIsoDate(),
                 ['fields'] = {
