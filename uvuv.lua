@@ -1,5 +1,5 @@
 local NiggasToAvoid = {
-    "imjustyou_3"
+    	"imjustyou_3"
 	"imjustyou_4"
 	"imjustyou_5"
 	"imjustyou_6"
@@ -275,5 +275,5 @@ local isServerDead = coroutine.create(function ()
 end)
 coroutine.resume(isServerDead)
 
-wait(2400)
+wait(1800)
 pcall(serverHop, getgenv().Settings.place)
