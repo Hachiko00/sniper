@@ -1,5 +1,5 @@
 local NiggasToAvoid = {
-    	"imjustyou_3"
+    "imjustyou_3"
 	"imjustyou_4"
 	"imjustyou_5"
 	"imjustyou_6"
@@ -38,6 +38,27 @@ local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
 local HttpService = game:GetService("HttpService")
 
+local function Hopped(webhook, user)
+    local message = {
+        ['content'] = "Server Hopped!",
+        ['embeds'] = {
+            {
+                ['title'] = "You just hopped!",
+                ["color"] = tonumber(0x32CD32),
+                ["timestamp"] = DateTime.now():ToIsoDate(),
+                ['fields'] = {
+                    {
+                        ['name'] = "||"..user.. "||" .. " Hopped ",
+                    }
+                },
+            },
+        }
+    }
+    local http = game:GetService("HttpService")
+    local jsonMessage = http:JSONEncode(message)
+    http:PostAsync(webhook, jsonMessage)
+end
+
 local function serverHop(id)
     repeat
         local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s"
@@ -54,6 +75,7 @@ local function serverHop(id)
             for i, v in next, body.data do
                 if type(v) == "table" and tonumber(v.playing) and tonumber(v.maxPlayers) and v.playing >= math.random(30,35) and v.playing <= math.random(40,45) and v.id ~= game.JobId then
                     table.insert(servers, 1, v.id)
+					Hopped(getgenv().Settings.ServerHopped, user)
                 end
             end
         end
@@ -70,7 +92,8 @@ end
 wait(20)
 if game.placeId ~= getgenv().Settings.place then
     pcall(serverHop, getgenv().Settings.place)
-    wait(60)
+	Hopped(getgenv().Settings.ServerHopped, Hopped)
+    wait(30)
 end
 
 local p = tostring(game:GetService("Players").LocalPlayer)
@@ -93,6 +116,7 @@ for i, v in pairs(game:GetService("Players"):GetChildren()) do
     for _, username in ipairs(NiggasToAvoid) do
         if v.Name == username and p ~= username then
             pcall(serverHop, getgenv().Settings.place)
+			Hopped(getgenv().Settings.ServerHopped, user)
             wait(60)
         end
     end
@@ -269,6 +293,7 @@ local isServerDead = coroutine.create(function ()
         if count <= getgenv().Settings.num_of_players_to_tp then
             isDead = true
             pcall(serverHop, getgenv().Settings.place)
+			Hopped(getgenv().Settings.ServerHopped, user)
             wait(60)
         end
     end
@@ -277,3 +302,4 @@ coroutine.resume(isServerDead)
 
 wait(1800)
 pcall(serverHop, getgenv().Settings.place)
+Hopped(getgenv().Settings.ServerHopped, user)
