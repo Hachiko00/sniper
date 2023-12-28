@@ -1,10 +1,10 @@
-local osclock = os.clock()
 repeat wait() until game:IsLoaded()
 
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local message1 = {}
 local Players = game:GetService('Players')
+local osclock = os.clock()
 local PlayerInServer = #Players:GetPlayers()
 
 local vu = game:GetService("VirtualUser")
