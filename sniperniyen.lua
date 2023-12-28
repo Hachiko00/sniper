@@ -209,7 +209,7 @@ local function processOneGem(uid, gems, item, version, shiny, amount, boughtFrom
                 ['fields'] = {
                     {
                         ['name'] = "PRICE:",
-                        ['value'] = tostring(gems) .. " GEMS",
+                        ['value'] = tostring(gems) .. " GEM",
                     },
                     {
                         ['name'] = "AMOUNT:",
