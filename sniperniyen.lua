@@ -200,7 +200,6 @@ local function processOneGem(uid, gems, item, version, shiny, amount, boughtFrom
     end
     
     local message1 = {
-        ['content'] = "hehe nice",
         ['embeds'] = {
             {
                 ['title'] = snipeMessage,
