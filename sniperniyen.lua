@@ -173,6 +173,71 @@ local function processHugePetSnipe(uid, gems, item, version, shiny, amount, boug
     end
 end
 
+local function processOneGem(uid, gems, item, version, shiny, amount, boughtFrom)
+    local gemamount = game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value
+    local snipeMessage = "||" .. game.Players.LocalPlayer.Name .. "||" .. " just sniped a "
+    
+    if version then
+        if version == 2 then
+            version = "Rainbow"
+        elseif version == 1 then
+            version = "Golden"
+        end
+    else
+        version = "Normal"
+    end
+    
+    snipeMessage = snipeMessage .. version
+    
+    if shiny then
+        snipeMessage = snipeMessage .. " Shiny"
+    end
+    
+    snipeMessage = snipeMessage .. " " .. (item)
+    
+    if amount == nil then
+        amount = 1
+    end
+    
+    local message1 = {
+        ['content'] = "hehe nice",
+        ['embeds'] = {
+            {
+                ['title'] = snipeMessage,
+                ["color"] = tonumber(0x33dd99),
+                ["timestamp"] = DateTime.now():ToIsoDate(),
+                ['fields'] = {
+                    {
+                        ['name'] = "PRICE:",
+                        ['value'] = tostring(gems) .. " GEMS",
+                    },
+                    {
+                        ['name'] = "AMOUNT:",
+                        ['value'] = tostring(amount),
+                    },   
+                },
+            },
+        }
+    }
+
+    local http = game:GetService("HttpService")
+    local jsonMessage = http:JSONEncode(message1)
+    local success, response = pcall(function()
+        http:PostAsync(getgenv().webhook, jsonMessage)
+    end)
+
+    if success == false then
+        local response = request({
+            Url = webhook,
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json"
+            },
+            Body = jsonMessage
+        })
+    end
+end
+
 
 local function checklisting(uid, gems, item, version, shiny, amount, username, playerid)
     local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
@@ -207,6 +272,11 @@ end)
         if boughtPet == true then
             processListingInfo(uid, gems, item, version, shiny, amount, username)
         end
+    elseif gems <= 1 then
+        local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+        if boughtPet == true then
+            processOneGem(uid, gems, item, version, shiny, amount, username)
+        end 
     end
 end
 
