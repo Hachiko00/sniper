@@ -1,10 +1,11 @@
+local osclock = os.clock()
 repeat wait() until game:IsLoaded()
 
+setfpscap(10)
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local message1 = {}
 local Players = game:GetService('Players')
-local osclock = os.clock()
 local PlayerInServer = #Players:GetPlayers()
 
 local vu = game:GetService("VirtualUser")
@@ -13,6 +14,12 @@ game:GetService("Players").LocalPlayer.Idled:connect(function()
    wait(1)
    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
+
+for i,v in ipairs(Players:GetPlayers()) do
+   if v ~= Players.LocalPlayer and v.Character then
+      v.Character:ClearAllChildren()
+   end
+end
 
 local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom)
     local gemamount = game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value
@@ -40,7 +47,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     end
     
     message1 = {
-        ['content'] = "@everyone",
+        ['content'] = "Goofyahh Sniper",
         ['embeds'] = {
             {
                 ['title'] = snipeMessage,
@@ -102,7 +109,7 @@ end)
         if boughtPet == true then
             processListingInfo(uid, gems, item, version, shiny, amount, username)
         end
-    elseif item == "Titanic Christmas Present" and gems <= 100000 then
+    elseif item == "Titanic Christmas Present" and gems <= 25000 then
         local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         if boughtPet == true then
             processListingInfo(uid, gems, item, version, shiny, amount, username)
@@ -117,7 +124,7 @@ end)
         if boughtPet == true then
             processListingInfo(uid, gems, item, version, shiny, amount, username)
         end     
-    elseif type.titanic and gems <= 1000000 then
+    elseif type.titanic and gems <= 10000000 then
         local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         if boughtPet == true then
             processListingInfo(uid, gems, item, version, shiny, amount, username)
@@ -151,35 +158,6 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
     end
 end)
 
-print('executed')
-
-local function create_platform(x, y, z)
-    local p = Instance.new("Part")
-    p.Anchored = true
-    p.Name = "plat"
-    p.Position = Vector3.new(x, y, z)
-    p.Size = Vector3.new(10, 1, 10)
-    p.Parent = game.Workspace
-end
-
-local function teleport(x, y, z)
-    local Players = game:GetService("Players")
-    local LocalPlayer = Players.LocalPlayer
-
-    -- Wait for the character to be available
-    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-
-    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-
-    if humanoidRootPart then
-        humanoidRootPart.CFrame = CFrame.new(Vector3.new(x, y, z))
-    end
-end
-
-create_platform(-922, 190, -2338)
-wait(10)
-teleport(-922, 200, -2338)
-
 local function jumpToServer() 
     local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true" 
     local req = request({ Url = string.format(sfUrl, 15502339080, "Desc", 100) }) 
@@ -209,20 +187,17 @@ end
 
 while wait(0.5) do
     PlayerInServer = #Players:GetPlayers()
-    if PlayerInServer < 30 or os.clock() >= osclock + 900 then
+    if PlayerInServer < 25 or os.clock() >= osclock + 900 then
         jumpToServer()
-        break
     end
     for count = 1, #alts, 1 do
         if game.Players:FindFirstChild(alts[count]) and alts[count] ~= game:GetService("Players").LocalPlayer.Name then
             jumpToServer()
-            break
         end
     end
-    for i,v in pairs (game.Players:GetPlayers()) do
+    for i,v in pairs (Players:GetPlayers()) do
         if v:IsInGroup(5060810) or v:IsInGroup(1200769) then
             jumpToServer()
-            break
         end
     end
 end
