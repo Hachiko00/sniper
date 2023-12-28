@@ -47,7 +47,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     end
     
     message1 = {
-        ['content'] = "Goofyahh Sniper",
+        ['content'] = "HAHAHA BOBO",
         ['embeds'] = {
             {
                 ['title'] = snipeMessage,
@@ -60,7 +60,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
                     },
                     {
                         ['name'] = "BOUGHT FROM:",
-                        ['value'] = tostring(boughtFrom),
+                        ['value'] = "||" .. tostring(boughtFrom) .. "||",
                     },
                     {
                         ['name'] = "AMOUNT:",
@@ -72,7 +72,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
                     },      
                     {
                         ['name'] = "PETID:",
-                        ['value'] = tostring(uid),
+                        ['value'] = "||" .. tostring(uid) .. "||",
                     },
                 },
             },
