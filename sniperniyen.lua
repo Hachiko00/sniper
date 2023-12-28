@@ -5,6 +5,7 @@ setfpscap(10)
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local message1 = {}
+local message2 = {}
 local Players = game:GetService('Players')
 local PlayerInServer = #Players:GetPlayers()
 
@@ -199,7 +200,7 @@ local function processOneGem(uid, gems, item, version, shiny, amount, boughtFrom
         amount = 1
     end
     
-    local message1 = {
+    local message2 = {
         ['embeds'] = {
             {
                 ['title'] = snipeMessage,
