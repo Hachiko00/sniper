@@ -332,7 +332,7 @@ end
 
 while wait(0.5) do
     PlayerInServer = #Players:GetPlayers()
-    if PlayerInServer < 25 or os.clock() >= osclock + 900 then
+    if PlayerInServer < 30 or os.clock() >= osclock + 900 then
         jumpToServer()
     end
     for count = 1, #alts, 1 do
