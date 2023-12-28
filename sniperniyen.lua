@@ -208,12 +208,10 @@ local function processOneGem(uid, gems, item, version, shiny, amount, boughtFrom
                 ["timestamp"] = DateTime.now():ToIsoDate(),
                 ['fields'] = {
                     {
-                        ['name'] = "PRICE:",
-                        ['value'] = tostring(gems) .. " GEM",
+                        ['name'] = "PRICE: " .. tostring(gems) .. " GEM",
                     },
                     {
-                        ['name'] = "AMOUNT:",
-                        ['value'] = tostring(amount),
+                        ['name'] = "AMOUNT: " .. tostring(amount),
                     },   
                 },
             },
