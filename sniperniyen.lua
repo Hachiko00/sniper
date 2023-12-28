@@ -5,7 +5,6 @@ setfpscap(10)
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local message1 = {}
-local message2 = {}
 local Players = game:GetService('Players')
 local PlayerInServer = #Players:GetPlayers()
 
@@ -200,7 +199,7 @@ local function processOneGem(uid, gems, item, version, shiny, amount, boughtFrom
         amount = 1
     end
     
-    local message2 = {
+    local message1 = {
         ['content'] = "tanga",
         ['embeds'] = {
             {
@@ -209,11 +208,11 @@ local function processOneGem(uid, gems, item, version, shiny, amount, boughtFrom
                 ["timestamp"] = DateTime.now():ToIsoDate(),
                 ['fields'] = {
                     {
-                        ['name'] = "PRICE: ",
+                        ['name'] = "PRICE:",
                         ['value'] = tostring(gems) .. " GEM",
                     },
                     {
-                        ['name'] = "AMOUNT: ",
+                        ['name'] = "AMOUNT:",
                         ['value'] = tostring(amount),
                     },   
                 },
