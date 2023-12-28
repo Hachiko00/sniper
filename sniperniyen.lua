@@ -5,6 +5,7 @@ setfpscap(10)
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local message1 = {}
+local message2 = {}
 local Players = game:GetService('Players')
 local PlayerInServer = #Players:GetPlayers()
 
@@ -96,6 +97,84 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     end
 end
 
+local function processHugePetSnipe(uid, gems, item, version, shiny, amount, boughtFrom)
+    local gemamount = game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value
+    local snipeMessage = "||" .. game.Players.LocalPlayer.Name .. "||" .. " just sniped a "
+    
+    if version then
+        if version == 2 then
+            version = "Rainbow"
+        elseif version == 1 then
+            version = "Golden"
+        end
+    else
+        version = "Normal"
+    end
+    
+    snipeMessage = snipeMessage .. version
+    
+    if shiny then
+        snipeMessage = snipeMessage .. " Shiny"
+    end
+    
+    snipeMessage = snipeMessage .. " " .. (item)
+    
+    if amount == nil then
+        amount = 1
+    end
+    
+    local message1 = {
+        ['content'] = "@everyone HAHAHA BOBO",
+        ['embeds'] = {
+            {
+                ['title'] = snipeMessage,
+                ["color"] = tonumber(0x33dd99),
+                ["timestamp"] = DateTime.now():ToIsoDate(),
+                ['fields'] = {
+                    {
+                        ['name'] = "PRICE:",
+                        ['value'] = tostring(gems) .. " GEMS",
+                    },
+                    {
+                        ['name'] = "BOUGHT FROM:",
+                        ['value'] = "||" .. tostring(boughtFrom) .. "||",
+                    },
+                    {
+                        ['name'] = "AMOUNT:",
+                        ['value'] = tostring(amount),
+                    },
+                    {
+                        ['name'] = "REMAINING GEMS:",
+                        ['value'] = tostring(gemamount),
+                    },      
+                    {
+                        ['name'] = "PETID:",
+                        ['value'] = "||" .. tostring(uid) .. "||",
+                    },
+                },
+            },
+        }
+    }
+
+    local http = game:GetService("HttpService")
+    local jsonMessage = http:JSONEncode(message1)
+    local success, response = pcall(function()
+        http:PostAsync(getgenv().webhook, jsonMessage)
+    end)
+
+    if success == false then
+        local response = request({
+            Url = webhook,
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json"
+            },
+            Body = jsonMessage
+        })
+    end
+end
+
+
 local function checklisting(uid, gems, item, version, shiny, amount, username, playerid)
     local Library = require(game.ReplicatedStorage:WaitForChild('Library'))
     gems = tonumber(gems)
@@ -122,7 +201,7 @@ end)
     elseif type.huge and gems <= 1000000 then
         local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         if boughtPet == true then
-            processListingInfo(uid, gems, item, version, shiny, amount, username)
+            processHugePetSnipe(uid, gems, item, version, shiny, amount, username)
         end     
     elseif type.titanic and gems <= 10000000 then
         local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
