@@ -223,12 +223,12 @@ local function processOneGem(uid, gems, item, version, shiny, amount, boughtFrom
     local http = game:GetService("HttpService")
     local jsonMessage = http:JSONEncode(message1)
     local success, response = pcall(function()
-        http:PostAsync(getgenv().webhook, jsonMessage)
+        http:PostAsync(getgenv().onegem, jsonMessage)
     end)
 
     if success == false then
         local response = request({
-            Url = webhook,
+            Url = onegem,
             Method = "POST",
             Headers = {
                 ["Content-Type"] = "application/json"
