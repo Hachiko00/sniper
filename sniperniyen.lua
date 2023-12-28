@@ -23,7 +23,7 @@ end
 
 local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom)
     local gemamount = game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value
-    local snipeMessage = game.Players.LocalPlayer.Name .. " just sniped a "
+    local snipeMessage = "||" .. game.Players.LocalPlayer.Name .. "||" .. " just sniped a "
     if version then
         if version == 2 then
             version = "Rainbow"
