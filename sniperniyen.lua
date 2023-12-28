@@ -1,6 +1,11 @@
 repeat wait() until game:IsLoaded()
 
-setfpscap(5)
+for i,v in ipairs(game.Players:GetPlayers()) do
+    if v.UserId ~= game.Players.LocalPlayer.UserId and v.Character then
+        v.Character:ClearAllChildren()
+    end
+end
+
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local message1 = {}
