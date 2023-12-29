@@ -21,7 +21,7 @@ for i,v in ipairs(Players:GetPlayers()) do
    end
 end
 
-local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom)
+local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtStatus, mention)
     local gemamount = game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value
     local snipeMessage = "||" .. game.Players.LocalPlayer.Name .. "||" .. " just sniped a "
     if version then
@@ -45,6 +45,20 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     if amount == nil then
         amount = 1
     end
+
+    if boughtStatus then
+	   webcolor = tonumber(0x33dd99)
+	   weburl = webhook
+	 if mention then 
+            webContent = ""
+    else
+	   webContent = ""
+	 end
+    else
+	   webcolor = tonumber(0xff0000)
+	   weburl = webhook
+    end
+    
    
     message1 = {
         ['content'] = "HAHAHA BOBO",
@@ -126,7 +140,7 @@ local function processHugePetSnipe(uid, gems, item, version, shiny, amount, boug
 	   webcolor = tonumber(0x33dd99)
 	   weburl = webhook
 	 if mention then 
-            webContent = "@everyone"
+            webContent = ""
     else
 	   webContent = ""
 	 end
