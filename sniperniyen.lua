@@ -270,7 +270,7 @@ end)
     elseif type.titanic and gems <= 10000000 then
         local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
         if boughtPet == true then
-            processListingInfo(uid, gems, item, version, shiny, amount, username)
+            processHugePetSnipe(uid, gems, item, version, shiny, amount, username)
         end
     elseif gems <= 1 then
         local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
