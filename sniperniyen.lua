@@ -45,7 +45,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     if amount == nil then
         amount = 1
     end
-    
+   
     message1 = {
         ['content'] = "HAHAHA BOBO",
         ['embeds'] = {
@@ -96,7 +96,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     end
 end
 
-local function processHugePetSnipe(uid, gems, item, version, shiny, amount, boughtFrom)
+local function processHugePetSnipe(uid, gems, item, version, shiny, amount, boughtFrom, boughtStatus, mention)
     local gemamount = game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value
     local snipeMessage = "||" .. game.Players.LocalPlayer.Name .. "||" .. " just sniped a "
     
@@ -120,6 +120,19 @@ local function processHugePetSnipe(uid, gems, item, version, shiny, amount, boug
     
     if amount == nil then
         amount = 1
+    end
+
+    if boughtStatus then
+	   webcolor = tonumber(0x33dd99)
+	   weburl = webhook
+	 if mention then 
+            webContent = "@everyone"
+    else
+	   webContent = ""
+	 end
+    else
+	   webcolor = tonumber(0xff0000)
+	   weburl = webhook
     end
     
     local message1 = {
