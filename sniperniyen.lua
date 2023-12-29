@@ -97,18 +97,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     local jsonMessage = http:JSONEncode(message1)
     local success, response = pcall(function()
             http:PostAsync(weburl, jsonMessage)
-    end)
-    if success == false then
-            local response = request({
-            Url = webhook,
-            Method = "POST",
-            Headers = {
-                ["Content-Type"] = "application/json"
-            },
-            Body = jsonMessage
-        })
     end
-end
 
 local function processHugePetSnipe(uid, gems, item, version, shiny, amount, boughtFrom, boughtStatus, mention)
     local gemamount = game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value
