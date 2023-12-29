@@ -21,7 +21,7 @@ for i,v in ipairs(Players:GetPlayers()) do
    end
 end
 
-local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtStatus, mention)
+local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom)
     local gemamount = game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value
     local snipeMessage = "||" .. game.Players.LocalPlayer.Name .. "||" .. " just sniped a "
     if version then
@@ -44,22 +44,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     
     if amount == nil then
         amount = 1
-    end
-
-    if boughtStatus then
-	   webcolor = tonumber(0x33dd99)
-	   weburl = webhook
-	 if mention then 
-            webContent = ""
-    else
-	   webContent = ""
-	 end
-    else
-	   webcolor = tonumber(0xff0000)
-	   weburl = webhook
-    end
-    
-   
+    end   
     message1 = {
         ['content'] = "HAHAHA BOBO",
         ['embeds'] = {
@@ -97,9 +82,20 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     local jsonMessage = http:JSONEncode(message1)
     local success, response = pcall(function()
             http:PostAsync(weburl, jsonMessage)
+    end)
+		
+    if success == false then
+        local response = request({
+            Url = webhook,
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json"
+            },
+            Body = jsonMessage
+        })
     end
-
-local function processHugePetSnipe(uid, gems, item, version, shiny, amount, boughtFrom, boughtStatus, mention)
+end
+local function processHugePetSnipe(uid, gems, item, version, shiny, amount, boughtFrom)
     local gemamount = game:GetService("Players").LocalPlayer.leaderstats["💎 Diamonds"].Value
     local snipeMessage = "||" .. game.Players.LocalPlayer.Name .. "||" .. " just sniped a "
     
@@ -124,20 +120,7 @@ local function processHugePetSnipe(uid, gems, item, version, shiny, amount, boug
     if amount == nil then
         amount = 1
     end
-
-    if boughtStatus then
-	   webcolor = tonumber(0x33dd99)
-	   weburl = webhook
-	 if mention then 
-            webContent = ""
-    else
-	   webContent = ""
-	 end
-    else
-	   webcolor = tonumber(0xff0000)
-	   weburl = webhook
-    end
-    
+			
     local message1 = {
         ['content'] = "@everyone HAHAHA BOBO",
         ['embeds'] = {
