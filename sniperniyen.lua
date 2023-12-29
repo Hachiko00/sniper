@@ -96,7 +96,7 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
     local http = game:GetService("HttpService")
     local jsonMessage = http:JSONEncode(message1)
     local success, response = pcall(function()
-            http:PostAsync(getgenv().webhook, jsonMessage)
+            http:PostAsync(weburl, jsonMessage)
     end)
     if success == false then
             local response = request({
