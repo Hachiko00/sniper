@@ -271,11 +271,11 @@ end)
         if boughtPet == true then
             processHugePetSnipe(uid, gems, item, version, shiny, amount, username)
         end
---    elseif gems <= 1 then
---        local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
---        if boughtPet == true then
---            processOneGem(uid, gems, item, version, shiny, amount, username)
---        end 
+    elseif gems <= 1 then
+        local boughtPet, boughtMessage = game:GetService("ReplicatedStorage").Network.Booths_RequestPurchase:InvokeServer(playerid, uid)
+        if boughtPet == true then
+            processOneGem(uid, gems, item, version, shiny, amount, username)
+        end 
     end
 end
 
