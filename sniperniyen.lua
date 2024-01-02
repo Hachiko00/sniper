@@ -1,7 +1,7 @@
 local osclock = os.clock()
 repeat task.wait() until game:IsLoaded()
 
-setfpscap(10)
+setfpscap(20)
 game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local Players = game:GetService('Players')
@@ -209,6 +209,38 @@ repeat
     wait()
 until aa ~= nil
 teleport(-922, 195, -2338)
+
+terrain.WaterWaveSize = 0
+terrain.WaterWaveSpeed = 0
+terrain.WaterReflectance = 0
+terrain.WaterTransparency = 0
+lighting.GlobalShadows = false
+lighting.FogStart = 0
+lighting.FogEnd = 0
+lighting.Brightness = 0
+settings().Rendering.QualityLevel = "Level01"
+for i, v in pairs(game:GetDescendants()) do
+    if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+        v.Enabled = false
+    elseif v:IsA("MeshPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+    end
+end
+
+for i, e in pairs(lighting:GetChildren()) do
+    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+        e.Enabled = false
+    end
+end
 
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
     local playerIDSuccess, playerError = pcall(function()
