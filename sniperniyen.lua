@@ -308,4 +308,6 @@ Players.PlayerAdded:Connect(function(player)
             jumpToServer()
         end
     end
-end) 
+end)
+
+print('execute')
