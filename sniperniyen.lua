@@ -297,7 +297,7 @@ end
 
 Players.PlayerRemoving:Connect(function(player)
     PlayerInServer = #getPlayers
-    if PlayerInServer < 30 or os.clock() >= osclock + 1200 then
+    if PlayerInServer < 30 then
         jumpToServer()
     end
 end) 
@@ -309,5 +309,11 @@ Players.PlayerAdded:Connect(function(player)
         end
     end
 end)
+
+while task.wait(1) do
+    if math.floor(os.clock() - osclock) >= math.random(900, 1200) then
+        jumpToServer()
+    end
+end
 
 print('execute')
