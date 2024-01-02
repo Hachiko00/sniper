@@ -16,12 +16,22 @@ if not snipeNormalPets then
     snipeNormalPets = false
 end
 
-local vu = game:GetService("VirtualUser")
-Players.LocalPlayer.Idled:connect(function()
-   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
-   task.wait(1)
-   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
 end)
+game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
+
+task.spawn(function()
+    game:GetService("GuiService").ErrorMessageChanged:Connect(function()
+        game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
+        print("Found An Error, Reonnecting...")
+        wait(0.1)
+        game:GetService("TeleportService"):Teleport(game.PlaceId)
+    end);
+end)
+
 
 for i = 1, PlayerInServer do
    for ii = 1,#alts do
