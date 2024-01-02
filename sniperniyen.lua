@@ -270,7 +270,7 @@ end
 
 Players.PlayerRemoving:Connect(function(player)
     PlayerInServer = #getPlayers
-    if PlayerInServer < 30 or os.clock() >= osclock + 1800 then
+    if PlayerInServer < 30 or os.clock() >= osclock + 1200 then
         jumpToServer()
     end
 end) 
