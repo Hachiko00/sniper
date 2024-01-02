@@ -16,40 +16,12 @@ if not snipeNormalPets then
     snipeNormalPets = false
 end
 
-local VirtualUser=game:service'VirtualUser'
-game:service'Players'.LocalPlayer.Idled:connect(function()
-VirtualUser:CaptureController()
-VirtualUser:ClickButton2(Vector2.new())
+local vu = game:GetService("VirtualUser")
+Players.LocalPlayer.Idled:connect(function()
+   vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+   task.wait(1)
+   vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 end)
-game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Disabled = true
-
-task.spawn(function()
-    game:GetService("GuiService").ErrorMessageChanged:Connect(function()
-        game.Players.LocalPlayer:Kick("Found An Error, Reconnecting...")
-        print("Found An Error, Reonnecting...")
-        wait(0.1)
-        game:GetService("TeleportService"):Teleport(game.PlaceId)
-    end);
-end)
-
-local function teleport(x, y, z)
-    local LocalPlayer = Players.LocalPlayer
-
-    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-
-    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-
-    if humanoidRootPart then
-        humanoidRootPart.CFrame = CFrame.new(Vector3.new(x, y, z))
-    end
-end
-
-create_platform(-922, 190, -2338)
-local aa = game.Workspace:FindFirstChild("plat")
-repeat
-    wait()
-until aa ~= nil
-teleport(-922, 195, -2338)
 
 for i = 1, PlayerInServer do
    for ii = 1,#alts do
@@ -172,7 +144,7 @@ local function checklisting(uid, gems, item, version, shiny, amount, username, p
     end
 
     local price = gems / amount
-   
+
     if type.huge and price <= 1000000 then
         local boughtPet, boughtMessage = purchase:InvokeServer(playerid, uid)
         if boughtPet == true then
@@ -225,9 +197,9 @@ local function checklisting(uid, gems, item, version, shiny, amount, username, p
         local boughtPet, boughtMessage = purchase:InvokeServer(playerid, uid)
         processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, ping)
     elseif gems == 1 and snipeNormalPets == true then
-	snipeNormal = true
-	local boughtPet, boughtMessage = purchase:InvokeServer(playerid, uid)
-        processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, ping)  
+        snipeNormal = true
+        local boughtPet, boughtMessage = purchase:InvokeServer(playerid, uid)
+        processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, ping)   
     end
 end
 
@@ -260,15 +232,6 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
 	end
     end
 end)
-
-local function create_platform(x, y, z)
-    local p = Instance.new("Part")
-    p.Anchored = true
-    p.Name = "plat"
-    p.Position = Vector3.new(x, y, z)
-    p.Size = Vector3.new(10, 1, 10)
-    p.Parent = game.Workspace
-end
 
 local function jumpToServer() 
     local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true" 
@@ -310,11 +273,10 @@ Players.PlayerAdded:Connect(function(player)
             jumpToServer()
         end
     end
-end)
+end) 
 
 while task.wait(1) do
     if math.floor(os.clock() - osclock) >= math.random(900, 1200) then
         jumpToServer()
     end
 end
-print('execute')
