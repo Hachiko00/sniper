@@ -182,6 +182,34 @@ local function checklisting(uid, gems, item, version, shiny, amount, username, p
     end
 end
 
+local function create_platform(x, y, z)
+    local p = Instance.new("Part")
+    p.Anchored = true
+    p.Name = "plat"
+    p.Position = Vector3.new(x, y, z)
+    p.Size = Vector3.new(10, 1, 10)
+    p.Parent = game.Workspace
+end
+
+local function teleport(x, y, z)
+    local LocalPlayer = Players.LocalPlayer
+
+    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+
+    local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+
+    if humanoidRootPart then
+        humanoidRootPart.CFrame = CFrame.new(Vector3.new(x, y, z))
+    end
+end
+
+create_platform(-922, 190, -2338)
+local aa = game.Workspace:FindFirstChild("plat")
+repeat
+    wait()
+until aa ~= nil
+teleport(-922, 195, -2338)
+
 Booths_Broadcast.OnClientEvent:Connect(function(username, message)
     local playerIDSuccess, playerError = pcall(function()
 	playerID = message['PlayerID']
