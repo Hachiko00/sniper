@@ -181,6 +181,9 @@ local function checklisting(uid, gems, item, version, shiny, amount, username, p
     elseif item == "Massive Comet" and gems <= 100000 then
         local boughtPet, boughtMessage = purchase:InvokeServer(playerid, uid)
         processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, ping)
+    elseif item == "Diamonds III" and gems <= 1000 then
+        local boughtPet, boughtMessage = purchase:InvokeServer(playerid, uid)
+        processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, ping)
     elseif item == "Crystal Key" and gems <= 1000 then
         local boughtPet, boughtMessage = purchase:InvokeServer(playerid, uid)
         processListingInfo(uid, gems, item, version, shiny, amount, username, boughtPet, ping)
