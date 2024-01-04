@@ -1,3 +1,5 @@
+--Thank you Edmond
+
 local osclock = os.clock()
 repeat task.wait() until game:IsLoaded()
 
@@ -27,12 +29,14 @@ end)
 for i = 1, PlayerInServer do
    for ii = 1,#alts do
         if getPlayers[i].Name == alts[ii] and alts[ii] ~= Players.LocalPlayer.Name then
-            jumpToServer()
+            while task.wait(1) do
+		jumpToServer()
+	    end
         end
     end
 end
 
-local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtStatus, mention)
+local function processListingInfo(uid, gems, item, version, shiny, amount, boughtFrom, boughtStatus, class, mention, failMessage, snipeNormal)
     local gemamount = Players.LocalPlayer.leaderstats["💎 Diamonds"].Value
     local snipeMessage ="||".. Players.LocalPlayer.Name .. "||"
     local weburl, webContent, webcolor
@@ -57,11 +61,17 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
 	end
 	if snipeNormal == true then
 	    weburl = normalwebhook
+	    snipeNormal = false
 	end
     else
+	webContent = failMessage
 	webcolor = tonumber(0xff0000)
 	weburl = webhookFail
 	snipeMessage = snipeMessage .. " failed to snipe a "
+	if snipeNormal == true then
+	    weburl = normalwebhook
+	    snipeNormal = false
+	end
     end
     
     snipeMessage = snipeMessage .. "**" .. version
@@ -77,8 +87,8 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
         ['embeds'] = {
             {
 		["author"] = {
-			["name"] = "Yen",
-			["icon_url"] = "https://cdn.discordapp.com/attachments/978757509881950258/1191679019201085480/asta.jpg?ex=65a65092&is=6593db92&hm=b64a28aec967de96b50c9e552d8eb160add24d4477c463d72f00d9e7acd636a7&",
+			["name"] = "Luna 🌚",
+			["icon_url"] = "https://cdn.discordapp.com/attachments/1149218291957637132/1190527382583525416/new-moon-face_1f31a.png?ex=65a22006&is=658fab06&hm=55f8900eef039709c8e57c96702f8fb7df520333ec6510a81c31fc746193fbf2&",
 		},
                 ['title'] = snipeMessage,
                 ["color"] = webcolor,
@@ -106,8 +116,8 @@ local function processListingInfo(uid, gems, item, version, shiny, amount, bough
                     },
                 },
 		["footer"] = {
-                        ["icon_url"] = "https://cdn.discordapp.com/attachments/978757509881950258/1191679019201085480/asta.jpg?ex=65a65092&is=6593db92&hm=b64a28aec967de96b50c9e552d8eb160add24d4477c463d72f00d9e7acd636a7&", -- optional
-                        ["text"] = "Yen"
+                        ["icon_url"] = "https://cdn.discordapp.com/attachments/1149218291957637132/1190527382583525416/new-moon-face_1f31a.png?ex=65a22006&is=658fab06&hm=55f8900eef039709c8e57c96702f8fb7df520333ec6510a81c31fc746193fbf2&", -- optional
+                        ["text"] = "Heavily Modified by Root"
 		}
             },
         }
@@ -204,22 +214,22 @@ Booths_Broadcast.OnClientEvent:Connect(function(username, message)
                     return
                 elseif class == "Enchant" and unitGems <= 30000 then
                     if item == "Fortune" then 
-                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, ping, snipeNormal)
-                    return
-                elseif string.find(item, "Chest Mimic") then
-                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, ping, snipeNormal)
-                    return
-                elseif item == "Lucky Block" then
-                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, ping, snipeNormal)
-                    return
+                        coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, ping, snipeNormal)
+                        return
+                    elseif string.find(item, "Chest Mimic") then
+                        coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, ping, snipeNormal)
+                        return
+                    elseif item == "Lucky Block" then
+                        coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, ping, snipeNormal)
+                        return
                     elseif item == "Massive Comet" then
-                    coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, ping, snipeNormal)
-                return
+                        coroutine.wrap(tryPurchase)(uid, gems, item, version, shiny, amount, username, class, playerid, buytimestamp, listTimestamp, ping, snipeNormal)
+                        return
+                    end
                 end
             end
         end
-    end
-end)
+    end)
 
 local function jumpToServer() 
     local sfUrl = "https://games.roblox.com/v1/games/%s/servers/Public?sortOrder=%s&limit=%s&excludeFullGames=true" 
@@ -250,21 +260,27 @@ end
 
 Players.PlayerRemoving:Connect(function(player)
     PlayerInServer = #getPlayers
-    if PlayerInServer < 30 then
-        jumpToServer()
+    if PlayerInServer < 25 then
+        while task.wait(1) do
+	    jumpToServer()
+	end
     end
 end) 
 
 Players.PlayerAdded:Connect(function(player)
     for i = 1,#alts do
         if player.Name == alts[i] and alts[i] ~= Players.LocalPlayer.Name then
-            jumpToServer()
+            while task.wait(1) do
+	        jumpToServer()
+	    end
         end
     end
 end) 
 
 while task.wait(1) do
     if math.floor(os.clock() - osclock) >= math.random(900, 1200) then
-        jumpToServer()
+        while task.wait(1) do
+	    jumpToServer()		
+	end	
     end
 end
