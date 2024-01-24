@@ -1,7 +1,7 @@
 local PetsToSell = {
-    {petName = "Pastel Griffin", GemAmnt = 80000, PetAmount = 1000},
-    {petName = "Pastel Goat", GemAmnt = 100000, PetAmount = 1000},
-    {petName = "Vibrant Cobra", GemAmnt = 80000, PetAmount = 100},
+    {petName = "Pastel Griffin", GemAmnt = 60000, PetAmount = 1000},
+    {petName = "Pastel Goat", GemAmnt = 80000, PetAmount = 1000},
+    {petName = "Vibrant Cobra", GemAmnt = 70000, PetAmount = 100},
 }
 
 local PetType = 2 -- 0 Reg, 1 Gold, 2 Rainbow
